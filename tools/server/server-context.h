@@ -56,7 +56,11 @@ struct server_context {
 
     // load the model and initialize llama_context
     // returns true on success
+<<<<<<< HEAD
     bool load_model(const common_params & params);
+=======
+    bool load_model(common_params & params);
+>>>>>>> upstream
 
     // this function will block main thread until termination
     void start_loop();
