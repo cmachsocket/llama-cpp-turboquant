@@ -155,13 +155,8 @@ struct server_slot {
     int64_t t_start_process_prompt;
     int64_t t_start_generation;
 
-<<<<<<< HEAD
-    double t_prompt_processing; // ms
-    double t_token_generation;  // ms
-=======
     double t_prompt_processing = 0.0; // ms
     double t_token_generation = 0.0;  // ms
->>>>>>> upstream
 
     std::function<void(int /* id_slot */)> callback_on_release;
 
@@ -637,11 +632,7 @@ private:
 
     // load the model and initialize llama_context
     // this may also be called to resume from sleeping state
-<<<<<<< HEAD
-    bool load_model(const common_params & params) {
-=======
     bool load_model(common_params & params) {
->>>>>>> upstream
         bool is_resume = sleeping;
 
         SRV_INF("loading model '%s'\n", params.model.path.c_str());
@@ -650,12 +641,9 @@ private:
 
         llama_init = common_init_from_params(params_base);
 
-<<<<<<< HEAD
-=======
         // propagate model-metadata sampling defaults back to caller
         params.sampling = params_base.sampling;
 
->>>>>>> upstream
         model = llama_init->model();
         ctx   = llama_init->context();
 
@@ -773,13 +761,8 @@ private:
 
         int n_ctx_slot = llama_n_ctx_seq(ctx);
         if (n_ctx_slot > n_ctx_train) {
-<<<<<<< HEAD
             SRV_WRN("the slot context (%d) exceeds the training context of the model (%d) - using rope scaling to extend\n", n_ctx_slot, n_ctx_train);
             // Do not cap: caller has configured rope scaling (--rope-scale / --rope-scaling yarn) to handle extended context.
-=======
-            SRV_WRN("the slot context (%d) exceeds the training context of the model (%d) - capping\n", n_ctx_slot, n_ctx_train);
-            n_ctx_slot = n_ctx_train;
->>>>>>> upstream
         }
 
         slots.clear();
@@ -2424,11 +2407,7 @@ private:
                                             // guarantee that a checkpoint will result in at least one token being processed [TAG_PROMPT_LOGITS]
                                             LOG_INF("slot %12.*s: id %2d | task %d | Checking checkpoint with [%d, %d] against %d...\n", 12,
                                                 func_name, (slot).id, ((slot).task ? (slot).task->id : -1), cur.pos_min, cur.pos_max, pos_min_thold);
-<<<<<<< HEAD
-                                            return cur.pos_min < pos_min_thold;
-=======
                                             return cur.pos_min < pos_min_thold || cur.pos_min == 0;
->>>>>>> upstream
                                         }
                                     );
 
@@ -3002,11 +2981,7 @@ private:
 server_context::server_context() : impl(new server_context_impl()) {}
 server_context::~server_context() = default;
 
-<<<<<<< HEAD
-bool server_context::load_model(const common_params & params) {
-=======
 bool server_context::load_model(common_params & params) {
->>>>>>> upstream
     return impl->load_model(params);
 }
 
